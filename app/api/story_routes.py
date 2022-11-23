@@ -69,12 +69,11 @@ def edit_story(id):
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
         data = form.data
-        story.user_id = current_user.id
+        # story.user_id = current_user.id
         story.title = data['title']
         story.content = data['content']
         story.image = data['image']
-        story.created_at = data['createdAt']
-
+        # story.created_at = data['createdAt']
         db.session.commit()
         return jsonify(story.to_dict())
     return jsonify('story not updated')
@@ -130,6 +129,9 @@ def add_comment(id):
 @story_routes.route('/<int:story_id>/comments/<int:comment_id>', methods=["DELETE"])
 @login_required
 def delete_comment(story_id, comment_id):
+    """
+    Deletes a comment
+    """
     comment = Comment.query.get(comment_id)
     db.session.delete(comment)
     db.session.commit()
@@ -140,23 +142,15 @@ def delete_comment(story_id, comment_id):
 @story_routes.route('/<int:story_id>/comments/<int:comment_id>', methods=["PUT"])
 @login_required
 def edit_comment(story_id, comment_id):
-
-#finish this by making it for comments instead of stories
-
-    # """
-    # Query for a story by id, edits the story, and returns that story in a dictionary
-    # """
-    # story = Story.query.get(id)
-    # form = StoryForm()
-    # form['csrf_token'].data = request.cookies['csrf_token']
-    # if form.validate_on_submit():
-    #     data = form.data
-    #     story.user_id = current_user.id
-    #     story.title = data['title']
-    #     story.content = data['content']
-    #     story.image = data['image']
-    #     story.created_at = data['createdAt']
-
-    #     db.session.commit()
-    #     return jsonify(story.to_dict())
-    # return jsonify('story not updated')
+    """
+    Query for a comment by id, edits the comment, and returns that comment in a dictionary
+    """
+    comment = Comment.query.get(comment_id)
+    form = CommentForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        data = form.data
+        comment.comment = data['comment']
+        db.session.commit()
+        return jsonify(comment.to_dict())
+    return jsonify('Comment not updated')
