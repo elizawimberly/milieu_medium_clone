@@ -78,3 +78,85 @@ def edit_story(id):
         db.session.commit()
         return jsonify(story.to_dict())
     return jsonify('story not updated')
+
+
+##################### DELETE STORY BY ID #######################
+@story_routes.route('/<int:id>', methods=["DELETE"])
+@login_required
+def delete_story(id):
+    """
+    Deletes a story
+    """
+    story = Story.query.get(id)
+    db.session.delete(story)
+    db.session.commit()
+    return jsonify('Story Deleted')
+
+
+
+############## GET ALL STORIES BY CURRENT USER ################
+@story_routes.route('/current')
+@login_required
+def current():
+    stories = current_user.stories
+
+    # return jsonify({'Stories': [story.to_dict(True) for story in stories]})
+    #without True arg
+    return jsonify({'Stories': [story.to_dict() for story in stories]})
+
+
+################ COMMENTS ROUTES ###################
+
+################ POST A COMMENT ####################
+@story_routes.route('/<int:id>/comments', methods=["POST"])
+@login_required
+def add_comment(id):
+    form = CommentForm()
+    form['csrf_token'].data = request.cookies['csrf_token']
+    if form.validate_on_submit():
+        data = form.data
+        new_comment = Comment(
+            user_id=current_user.id,
+            story_id=id,
+            comment=data["comment"]
+        )
+        db.session.add(new_comment)
+        db.session.commit()
+        return jsonify(new_comment.to_dict())
+    return jsonify("Comment not added")
+
+
+################ DELETE A COMMENT ####################
+@story_routes.route('/<int:story_id>/comments/<int:comment_id>', methods=["DELETE"])
+@login_required
+def delete_comment(story_id, comment_id):
+    comment = Comment.query.get(comment_id)
+    db.session.delete(comment)
+    db.session.commit()
+    return jsonify('Comment Deleted')
+
+
+################ EDIT A COMMENT ####################
+@story_routes.route('/<int:story_id>/comments/<int:comment_id>', methods=["PUT"])
+@login_required
+def edit_comment(story_id, comment_id):
+
+#finish this by making it for comments instead of stories
+
+    # """
+    # Query for a story by id, edits the story, and returns that story in a dictionary
+    # """
+    # story = Story.query.get(id)
+    # form = StoryForm()
+    # form['csrf_token'].data = request.cookies['csrf_token']
+    # if form.validate_on_submit():
+    #     data = form.data
+    #     story.user_id = current_user.id
+    #     story.title = data['title']
+    #     story.content = data['content']
+    #     story.image = data['image']
+    #     story.created_at = data['createdAt']
+
+    #     db.session.commit()
+    #     return jsonify(story.to_dict())
+    # return jsonify('story not updated')
