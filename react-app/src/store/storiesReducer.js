@@ -47,7 +47,7 @@ export const actionUpdateSingleStory = (updatePhoto) => ({
   payload: updatePhoto,
 });
 
-export const actionDeleteSinglePhoto = (storyId) => ({
+export const actionDeleteSingleStory = (storyId) => ({
   type: STORIES_DELETE_SINGLE_STORY,
   payload: storyId,
 });
@@ -82,9 +82,9 @@ export const actionUpdateSingleComment = (updateComment) => ({
   payload: updateComment,
 });
 
-/***************************** THUNKS (API) ******************************/
+/********************* THUNKS (API) *************************/
 
-/**************************** STORIES ************************************/
+/********************* STORIES THUNKS ***********************/
 
 //refactored
 // export const thunkCreateSingleStory =
@@ -178,46 +178,47 @@ export const thunkUpdateSingleStory =
     }
   };
 
-//current refactored
-export const thunkDeleteSinglePhoto = (photoId) => async (dispatch) => {
-  const response = await fetch(`/api/photos/${photoId}`, {
+//refactored
+export const thunkDeleteSingleStory = (storyId) => async (dispatch) => {
+  const response = await fetch(`/api/photos/${storyId}`, {
     method: "delete",
   });
   if (response.ok) {
-    dispatch(actionDeleteSinglePhoto(photoId));
+    dispatch(actionDeleteSingleStory(storyId));
     return;
   }
 };
 
 // tags
-export const thunkCreateSingleTag =
-  (photoId, createTagData) => async (dispatch) => {
-    const response = await fetch(`/api/photos/${photoId}/tags`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ tags: createTagData }),
-    });
-    if (response.ok) {
-      const newTags = await response.json();
-      dispatch(actionCreateSingleTag(newTags.Tags));
-      return newTags;
-    }
-  };
+// export const thunkCreateSingleTag =
+//   (photoId, createTagData) => async (dispatch) => {
+//     const response = await fetch(`/api/photos/${photoId}/tags`, {
+//       method: "POST",
+//       headers: { "Content-Type": "application/json" },
+//       body: JSON.stringify({ tags: createTagData }),
+//     });
+//     if (response.ok) {
+//       const newTags = await response.json();
+//       dispatch(actionCreateSingleTag(newTags.Tags));
+//       return newTags;
+//     }
+//   };
 
-export const thunkDeleteSingleTag = (photoId, tagId) => async (dispatch) => {
-  const response = await fetch(`/api/photos/${photoId}/tags/${tagId}`, {
-    method: "delete",
-  });
-  if (response.ok) {
-    dispatch(actionDeleteSingleTag(tagId));
-    return;
-  }
-};
+// export const thunkDeleteSingleTag = (photoId, tagId) => async (dispatch) => {
+//   const response = await fetch(`/api/photos/${photoId}/tags/${tagId}`, {
+//     method: "delete",
+//   });
+//   if (response.ok) {
+//     dispatch(actionDeleteSingleTag(tagId));
+//     return;
+//   }
+// };
 
-// comments
+/********************* COMMENTS THUNKS **************************/
+//current refactored
 export const thunkCreateSingleComment =
-  (photoId, createCommentData) => async (dispatch) => {
-    const response = await fetch(`/api/photos/${photoId}/comments`, {
+  (storyId, createCommentData) => async (dispatch) => {
+    const response = await fetch(`/api/stories/${storyId}/comments`, {
       method: "post",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ comment: createCommentData }),
