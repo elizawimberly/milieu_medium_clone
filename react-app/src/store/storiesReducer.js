@@ -113,10 +113,11 @@ export const thunkCreateSingleStory = (newStory) => async (dispatch) => {
 
 //refactored
 export const thunkReadAllStories = () => async (dispatch) => {
+  console.log("HIT thunkReadAllStories THUNK");
   const response = await fetch(`/api/stories/`);
   if (response.ok) {
     const allStories = await response.json();
-    dispatch(actionReadAllStories(allStories.Stories));
+    dispatch(actionReadAllStories(allStories.stories));
     return allStories;
   }
 };

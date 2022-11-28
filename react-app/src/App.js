@@ -4,9 +4,10 @@ import { useDispatch } from "react-redux";
 import LoginForm from "./components/auth/LoginForm";
 import SignUpForm from "./components/auth/SignUpForm";
 import NavBar from "./components/NavBar";
-import ProtectedRoute from "./components/auth/ProtectedRoute";
-import UsersList from "./components/UsersList";
-import User from "./components/User";
+// import ProtectedRoute from "./components/auth/ProtectedRoute";
+// import UsersList from "./components/UsersList";
+// import User from "./components/User";
+import SplashPage from "./components/SplashPage";
 import { authenticate } from "./store/session";
 
 function App() {
@@ -28,9 +29,9 @@ function App() {
     <BrowserRouter>
       <NavBar />
       <Switch>
-        {/* LANDING */}
+        {/* SPLASH */}
         <Route path="/" exact={true}>
-          <Landing />
+          <SplashPage />
         </Route>
 
         {/* yeet both landing routes once landing is set up to auto render */}
@@ -56,7 +57,7 @@ function App() {
           <Explore />
         </Route> */}
 
-        <Route path="/storystream" exact={true}>
+        {/* <Route path="/storystream" exact={true}>
           <Storystream />
         </Route>
 
@@ -70,7 +71,7 @@ function App() {
 
         <Route path="/stories/:storyId/edit" exact={true}>
           <StoryUpdateForm />
-        </Route>
+        </Route> */}
 
         {/* PROTECTED COMPONENTS
         <ProtectedRoute path='/users' exact={true} >
