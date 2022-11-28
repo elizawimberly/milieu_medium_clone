@@ -3,7 +3,7 @@
 import { normalizeArray } from "../component-resources/index";
 
 /********************************* TYPES *********************************/
-// photos
+// stories
 const STORIES_CREATE_SINGLE_STORY = "stories/CREATE_SINGLE_STORY";
 const STORIES_READ_ALL_STORIES = "stories/READ_ALL_STORIES";
 const STORIES_READ_ALL_STORIES_BY_USER = "stories/READ_ALL_STORIES_BY_USER";
@@ -42,9 +42,9 @@ export const actionReadSingleStoryDetails = (singleStoryDetails) => ({
   payload: singleStoryDetails,
 });
 
-export const actionUpdateSingleStory = (updatePhoto) => ({
+export const actionUpdateSingleStory = (updateStory) => ({
   type: STORIES_UPDATE_SINGLE_STORY,
-  payload: updatePhoto,
+  payload: updateStory,
 });
 
 export const actionDeleteSingleStory = (storyId) => ({
@@ -166,7 +166,7 @@ export const thunkReadSingleStoryDetails = (storyId) => async (dispatch) => {
 //refactored --- see commented out code above for notes
 export const thunkUpdateSingleStory =
   (updatedStory, storyId) => async (dispatch) => {
-    const response = await fetch(`/api/photos/${storyId}`, {
+    const response = await fetch(`/api/stories/${storyId}`, {
       method: "put",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updatedStory),
@@ -180,7 +180,7 @@ export const thunkUpdateSingleStory =
 
 //refactored
 export const thunkDeleteSingleStory = (storyId) => async (dispatch) => {
-  const response = await fetch(`/api/photos/${storyId}`, {
+  const response = await fetch(`/api/stories/${storyId}`, {
     method: "delete",
   });
   if (response.ok) {
@@ -215,7 +215,7 @@ export const thunkDeleteSingleStory = (storyId) => async (dispatch) => {
 // };
 
 /********************* COMMENTS THUNKS **************************/
-//current refactored
+//refactored
 export const thunkCreateSingleComment =
   (storyId, createCommentData) => async (dispatch) => {
     const response = await fetch(`/api/stories/${storyId}/comments`, {
@@ -230,10 +230,26 @@ export const thunkCreateSingleComment =
     }
   };
 
+//new
+export const thunkUpdateSingleComment =
+  (updatedComment, commentId) => async (dispatch) => {
+    const response = await fetch(`/api/stories/${commentId}`, {
+      method: "put",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(updatedComment),
+    });
+    if (response.ok) {
+      const updateComment = await response.json();
+      dispatch(actionUpdateSingleComment(updateComment));
+      return updateComment;
+    }
+  };
+
+//refactored
 export const thunkDeleteSingleComment =
-  (photoId, commentId) => async (dispatch) => {
+  (storyId, commentId) => async (dispatch) => {
     const response = await fetch(
-      `/api/photos/${photoId}/comments/${commentId}`,
+      `/api/stories/${storyId}/comments/${commentId}`,
       {
         method: "delete",
       }
@@ -245,231 +261,224 @@ export const thunkDeleteSingleComment =
   };
 
 /***************************** STATE SHAPE *******************************/
+//refactored
 const initialState = {
-  allPhotos: {},
-  userPhotos: {},
-  singlePhotoDetails: {
+  allStories: {},
+  userStories: {},
+  singleStoryDetails: {
     Comments: {},
-    Tags: {},
   },
 };
 
 /******************************* REDUCER *********************************/
-const photosReducer = (state = initialState, action) => {
+const storiesReducer = (state = initialState, action) => {
   let newState = { ...state };
 
   switch (action.type) {
-    // photos
-    case PHOTOS_CREATE_SINGLE_PHOTO:
-      newState.allPhotos = { ...state.allPhotos };
-      // add new photo to normalized object of all photos
-      newState.allPhotos[action.payload.id] = { ...action.payload };
-      newState.userPhotos = { ...state.userPhotos };
-      newState.singlePhotoDetails = { ...action.payload };
+    // stories
+    //refactored
+    /************************************************************/
+    case STORIES_CREATE_SINGLE_STORY:
+      newState.allStories = { ...state.allStories };
+      // add new story to normalized object of all stories
+      newState.allStories[action.payload.id] = { ...action.payload };
+      newState.userStories = { ...state.userStories };
+      newState.singleStoryDetails = { ...action.payload };
       // deep copy nested structures
-      newState.singlePhotoDetails.Comments = normalizeArray(
+      newState.singleStoryDetails.Comments = normalizeArray(
         action.payload.Comments
       );
-      newState.singlePhotoDetails.Tags = normalizeArray(action.payload.Tags);
       return newState;
 
-    case PHOTOS_READ_ALL_PHOTOS:
-      newState.allPhotos = { ...state.allPhotos };
-      newState.allPhotos = normalizeArray(action.payload);
-      newState.userPhotos = { ...state.userPhotos };
-      newState.singlePhotoDetails = { ...state.singlePhotoDetails };
-      // deep copy nested structures: singlePhotoDetails.Comments
-      let readAllPhotos_RevertCommentsArr = Object.values(
-        newState.singlePhotoDetails.Comments
+    //refactored
+    /**********************************************************/
+    case STORIES_READ_ALL_STORIES:
+      newState.allStories = { ...state.allStories };
+      newState.allStories = normalizeArray(action.payload);
+      newState.userStories = { ...state.userStories };
+      newState.singleStoryDetails = { ...state.singleStoryDetails };
+      // deep copy nested structures: singleStoryDetails.Comments
+      let readAllStories_RevertCommentsArr = Object.values(
+        newState.singleStoryDetails.Comments
       );
-      let readAllPhotos_NewCopyCommentsObj = normalizeArray(
-        readAllPhotos_RevertCommentsArr
+      let readAllStories_NewCopyCommentsObj = normalizeArray(
+        readAllStories_RevertCommentsArr
       );
-      newState.singlePhotoDetails.Comments = readAllPhotos_NewCopyCommentsObj;
-      // deep copy nested structures: singlePhotoDetails.Comments
-      let readAllPhotos_RevertTagsArr = Object.values(
-        newState.singlePhotoDetails.Tags
-      );
-      let readAllPhotos_NewCopyTagsObj = normalizeArray(
-        readAllPhotos_RevertTagsArr
-      );
-      newState.singlePhotoDetails.Tags = readAllPhotos_NewCopyTagsObj;
+      newState.singleStoryDetails.Comments = readAllStories_NewCopyCommentsObj;
+      // deep copy nested structures: singleStoryDetails.Tags
+      // let readAllStories_RevertTagsArr = Object.values(
+      //   newState.singleStoryDetails.Tags
+      // );
+      // let readAllStories_NewCopyTagsObj = normalizeArray(
+      //   readAllStories_RevertTagsArr
+      // );
+      // newState.singleStoryDetails.Tags = readAllStories_NewCopyTagsObj;
       return newState;
 
-    case PHOTOS_READ_ALL_PHOTOS_BY_USER:
-      newState.allPhotos = { ...state.allPhotos };
-      newState.userPhotos = { ...state.userPhotos };
-      newState.userPhotos = normalizeArray(action.payload);
-      newState.singlePhotoDetails = { ...state.singlePhotoDetails };
-      // deep copy nested structures: singlePhotoDetails.Comments
-      let readAllPhotosByUser_RevertCommentsArr = Object.values(
-        newState.singlePhotoDetails.Comments
+    //refactored
+    /************************************************************/
+    case STORIES_READ_ALL_STORIES_BY_USER:
+      newState.allStories = { ...state.allStories };
+      newState.userStories = { ...state.userStories };
+      newState.userStories = normalizeArray(action.payload);
+      newState.singleStoryDetails = { ...state.singleStoryDetails };
+      // deep copy nested structures: singleStoryDetails.Comments
+      let readAllStoriesByUser_RevertCommentsArr = Object.values(
+        newState.singleStoryDetails.Comments
       );
-      let readAllPhotosByUser_NewCopyCommentsObj = normalizeArray(
-        readAllPhotosByUser_RevertCommentsArr
+      let readAllStoriesByUser_NewCopyCommentsObj = normalizeArray(
+        readAllStoriesByUser_RevertCommentsArr
       );
-      newState.singlePhotoDetails.Comments =
-        readAllPhotosByUser_NewCopyCommentsObj;
-      // deep copy nested structures: singlePhotoDetails.Comments
-      let readAllPhotosByUser_RevertTagsArr = Object.values(
-        newState.singlePhotoDetails.Tags
-      );
-      let readAllPhotosByUser_NewCopyTagsObj = normalizeArray(
-        readAllPhotosByUser_RevertTagsArr
-      );
-      newState.singlePhotoDetails.Tags = readAllPhotosByUser_NewCopyTagsObj;
+      newState.singleStoryDetails.Comments =
+        readAllStoriesByUser_NewCopyCommentsObj;
+      // deep copy nested structures: singleStoryDetails.Tags
+      // let readAllStoriesByUser_RevertTagsArr = Object.values(
+      //   newState.singleStoryDetails.Tags
+      // );
+      // let readAllStoriesByUser_NewCopyTagsObj = normalizeArray(
+      //   readAllStoriesByUser_RevertTagsArr
+      // );
+      // newState.singleStoryDetails.Tags = readAllStoriesByUser_NewCopyTagsObj;
       return newState;
 
-    case PHOTOS_READ_SINGLE_PHOTO_DETAILS:
-      newState.allPhotos = { ...state.allPhotos };
-      newState.userPhotos = { ...state.userPhotos };
-      newState.singlePhotoDetails = { ...action.payload };
+    //refactored
+    /**********************************************************/
+    case STORIES_READ_SINGLE_STORY_DETAILS:
+      newState.allStories = { ...state.allStories };
+      newState.userStories = { ...state.userStories };
+      newState.singleStoryDetails = { ...action.payload };
       // deep copy nested structures
-      newState.singlePhotoDetails.Comments = normalizeArray(
+      newState.singleStoryDetails.Comments = normalizeArray(
         action.payload.Comments
       );
-      newState.singlePhotoDetails.Tags = normalizeArray(action.payload.Tags);
+      // newState.singleStoryDetails.Tags = normalizeArray(action.payload.Tags);
       return newState;
 
-    case PHOTOS_UPDATE_SINGLE_PHOTO:
-      newState.allPhotos = { ...state.allPhotos };
-      newState.userPhotos = { ...state.userPhotos };
-      newState.singlePhotoDetails = { ...action.payload };
+    //refactored
+    /*********************************************************/
+    case STORIES_UPDATE_SINGLE_STORY:
+      newState.allStories = { ...state.allStories };
+      newState.userStories = { ...state.userStories };
+      newState.singleStoryDetails = { ...action.payload };
       // deep copy nested structures
-      newState.singlePhotoDetails.Comments = normalizeArray(
+      newState.singleStoryDetails.Comments = normalizeArray(
         action.payload.Comments
       );
-      newState.singlePhotoDetails.Tags = normalizeArray(action.payload.Tags);
+      // newState.singleStoryDetails.Tags = normalizeArray(action.payload.Tags);
       return newState;
 
-    case PHOTOS_DELETE_SINGLE_PHOTO:
-      newState.allPhotos = { ...state.allPhotos };
-      // remove photo
-      delete newState.allPhotos[action.payload.id];
-      newState.userPhotos = { ...state.userPhotos };
-      newState.singlePhotoDetails = { ...state.singlePhotoDetails };
-      // deep copy nested structures: singlePhotoDetails.Comments
-      let deleteSinglePhoto_RevertCommentsArr = Object.values(
-        newState.singlePhotoDetails.Comments
+    //refactored
+    /*********************************************************/
+    case STORIES_DELETE_SINGLE_STORY:
+      newState.allStories = { ...state.allStories };
+      // remove story
+      delete newState.allStories[action.payload.id];
+      newState.userStories = { ...state.userStories };
+      newState.singleStoryDetails = { ...state.singleStoryDetails };
+      // deep copy nested structures: singleStoryDetails.Comments
+      let deleteSingleStory_RevertCommentsArr = Object.values(
+        newState.singleStoryDetails.Comments
       );
-      let deleteSinglePhoto_NewCopyCommentsObj = normalizeArray(
-        deleteSinglePhoto_RevertCommentsArr
+      let deleteSingleStory_NewCopyCommentsObj = normalizeArray(
+        deleteSingleStory_RevertCommentsArr
       );
-      newState.singlePhotoDetails.Comments =
-        deleteSinglePhoto_NewCopyCommentsObj;
-      // deep copy nested structures: singlePhotoDetails.Comments
-      let deleteSinglePhoto_RevertTagsArr = Object.values(
-        newState.singlePhotoDetails.Tags
-      );
-      let deleteSinglePhoto_NewCopyTagsObj = normalizeArray(
-        deleteSinglePhoto_RevertTagsArr
-      );
-      newState.singlePhotoDetails.Tags = deleteSinglePhoto_NewCopyTagsObj;
-      return newState;
-
-    // tags
-    case PHOTOS_CREATE_SINGLE_TAG:
-      newState.allPhotos = { ...state.allPhotos };
-      newState.userPhotos = { ...state.userPhotos };
-      newState.singlePhotoDetails = { ...state.singlePhotoDetails };
-      // deep copy nested structure: singlePhotoDetails.Comments
-      let createSingleTag_RevertCommentsArr = Object.values(
-        newState.singlePhotoDetails.Comments
-      );
-      let createSingleTag_NewCopyCommentsObj = normalizeArray(
-        createSingleTag_RevertCommentsArr
-      );
-      newState.singlePhotoDetails.Comments = createSingleTag_NewCopyCommentsObj;
-      // deep copy nested structures: singlePhotoDetails.Tags
-      let createSingleTag_RevertTagsArr = Object.values(
-        newState.singlePhotoDetails.Tags
-      );
-      let createSingleTag_NewCopyTagsObj = normalizeArray(
-        createSingleTag_RevertTagsArr
-      );
-      newState.singlePhotoDetails.Tags = createSingleTag_NewCopyTagsObj;
-      // add new tag
-      action.payload.forEach((tag) => {
-        newState.singlePhotoDetails.Tags[tag.id] = tag;
-      });
-      return newState;
-
-    case PHOTOS_DELETE_SINGLE_TAG:
-      newState.allPhotos = { ...state.allPhotos };
-      newState.userPhotos = { ...state.userPhotos };
-      newState.singlePhotoDetails = { ...state.singlePhotoDetails };
-      // deep copy nested structure: singlePhotoDetails.Comments
-      let deleteSingleTag_RevertCommentsArr = Object.values(
-        newState.singlePhotoDetails.Comments
-      );
-      let deleteSingleTag_NewCopyCommentsObj = normalizeArray(
-        deleteSingleTag_RevertCommentsArr
-      );
-      newState.singlePhotoDetails.Comments = deleteSingleTag_NewCopyCommentsObj;
-      // deep copy nested structures: singlePhotoDetails.Tags
-      let deleteSingleTag_RevertTagsArr = Object.values(
-        newState.singlePhotoDetails.Tags
-      );
-      let deleteSingleTag_NewCopyTagsObj = normalizeArray(
-        deleteSingleTag_RevertTagsArr
-      );
-      newState.singlePhotoDetails.Tags = deleteSingleTag_NewCopyTagsObj;
-      // remove tag
-      delete newState.singlePhotoDetails.Tags[action.payload];
+      newState.singleStoryDetails.Comments =
+        deleteSingleStory_NewCopyCommentsObj;
+      // deep copy nested structures: singleStoryDetails.Tags
+      // let deleteSingleStory_RevertTagsArr = Object.values(
+      //   newState.singleStoryDetails.Tags
+      // );
+      // let deleteSingleStory_NewCopyTagsObj = normalizeArray(
+      //   deleteSingleStory_RevertTagsArr
+      // );
+      // newState.singleStoryDetails.Tags = deleteSingleStory_NewCopyTagsObj;
       return newState;
 
     // comments
-    case PHOTOS_CREATE_SINGLE_COMMENT:
-      newState.allPhotos = { ...state.allPhotos };
-      newState.userPhotos = { ...state.userPhotos };
-      newState.singlePhotoDetails = { ...state.singlePhotoDetails };
-      // deep copy nested structures: singlePhotoDetails.Comments
+    //refactored
+    /*********************************************************/
+    case STORIES_CREATE_SINGLE_COMMENT:
+      newState.allStories = { ...state.allStories };
+      newState.userStories = { ...state.userStories };
+      newState.singleStoryDetails = { ...state.singleStoryDetails };
+      // deep copy nested structures: singleStoryDetails.Comments
       let createSingleComment_RevertCommentsArr = Object.values(
-        newState.singlePhotoDetails.Comments
+        newState.singleStoryDetails.Comments
       );
       let createSingleComment_NewCopyCommentsObj = normalizeArray(
         createSingleComment_RevertCommentsArr
       );
-      newState.singlePhotoDetails.Comments =
+      newState.singleStoryDetails.Comments =
         createSingleComment_NewCopyCommentsObj;
       // add new comment
-      newState.singlePhotoDetails.Comments[action.payload.id] = {
+      newState.singleStoryDetails.Comments[action.payload.id] = {
         ...action.payload,
       };
-      // deep copy nested structure: singlePhotoDetails.Tags
-      let createSingleComment_RevertTagsArr = Object.values(
-        newState.singlePhotoDetails.Tags
-      );
-      let createSingleComment_NewCopyTagsObj = normalizeArray(
-        createSingleComment_RevertTagsArr
-      );
-      newState.singlePhotoDetails.Tags = createSingleComment_NewCopyTagsObj;
+      // deep copy nested structure: singleStoryDetails.Tags
+      // let createSingleComment_RevertTagsArr = Object.values(
+      //   newState.singleStoryDetails.Tags
+      // );
+      // let createSingleComment_NewCopyTagsObj = normalizeArray(
+      //   createSingleComment_RevertTagsArr
+      // );
+      // newState.singleStoryDetails.Tags = createSingleComment_NewCopyTagsObj;
       return newState;
 
-    case PHOTOS_DELETE_SINGLE_COMMENT:
-      newState.allPhotos = { ...state.allPhotos };
-      newState.userPhotos = { ...state.userPhotos };
-      newState.singlePhotoDetails = { ...state.singlePhotoDetails };
-      // deep copy nested structure: singlePhotoDetails.Comments
+    //new
+    /*********************************************************/
+    case STORIES_UPDATE_SINGLE_COMMENT:
+      newState.allStories = { ...state.allStories };
+      newState.userStories = { ...state.userStories };
+      newState.singleStoryDetails = { ...state.singleStoryDetails };
+      // deep copy nested structures: singleStoryDetails.Comments
+      let updateSingleComment_RevertCommentsArr = Object.values(
+        newState.singleStoryDetails.Comments
+      );
+      let updateSingleComment_NewCopyCommentsObj = normalizeArray(
+        updateSingleComment_RevertCommentsArr
+      );
+      newState.singleStoryDetails.Comments =
+        updateSingleComment_NewCopyCommentsObj;
+      // add new comment
+      newState.singleStoryDetails.Comments[action.payload.id] = {
+        ...action.payload,
+      };
+      // deep copy nested structure: singleStoryDetails.Tags
+      // let updateSingleComment_RevertTagsArr = Object.values(
+      //   newState.singleStoryDetails.Tags
+      // );
+      // let updateSingleComment_NewCopyTagsObj = normalizeArray(
+      //   updateSingleComment_RevertTagsArr
+      // );
+      // newState.singleStoryDetails.Tags = updateSingleComment_NewCopyTagsObj;
+      return newState;
+
+    //refactored
+    /*********************************************************/
+    case STORIES_DELETE_SINGLE_COMMENT:
+      newState.allStories = { ...state.allStories };
+      newState.userStories = { ...state.userStories };
+      newState.singleStoryDetails = { ...state.singleStoryDetails };
+      // deep copy nested structure: singleStoryDetails.Comments
       let deleteSingleComment_RevertCommentsArr = Object.values(
-        newState.singlePhotoDetails.Comments
+        newState.singleStoryDetails.Comments
       );
       let deleteSingleComment_NewCopyCommentsObj = normalizeArray(
         deleteSingleComment_RevertCommentsArr
       );
       // delete deleteSingleComment_NewCopyCommentsObj[action.payload.id];
-      newState.singlePhotoDetails.Comments =
+      newState.singleStoryDetails.Comments =
         deleteSingleComment_NewCopyCommentsObj;
       // remove comment
-      delete newState.singlePhotoDetails.Comments[action.payload];
-      // deep copy nested structures: singlePhotoDetails.Tags
-      let deleteSingleComment_RevertTagsArr = Object.values(
-        newState.singlePhotoDetails.Tags
-      );
-      let deleteSingleComment_NewCopyTagsObj = normalizeArray(
-        deleteSingleComment_RevertTagsArr
-      );
-      newState.singlePhotoDetails.Tags = deleteSingleComment_NewCopyTagsObj;
+      delete newState.singleStoryDetails.Comments[action.payload];
+      // deep copy nested structures: singleStoryDetails.Tags
+      // let deleteSingleComment_RevertTagsArr = Object.values(
+      //   newState.singleStoryDetails.Tags
+      // );
+      // let deleteSingleComment_NewCopyTagsObj = normalizeArray(
+      //   deleteSingleComment_RevertTagsArr
+      // );
+      // newState.singleStoryDetails.Tags = deleteSingleComment_NewCopyTagsObj;
       return newState;
 
     default:
@@ -478,4 +487,4 @@ const photosReducer = (state = initialState, action) => {
 };
 
 /******************************** EXPORTS ********************************/
-export default photosReducer;
+export default storiesReducer;
