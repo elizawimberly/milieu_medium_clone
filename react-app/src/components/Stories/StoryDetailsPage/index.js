@@ -13,6 +13,7 @@ import "./StoryDetailsPage.css";
 import { convertDate } from "../../../component-resources";
 import CommentCreateFormModal from "../../Comments/CommentCreateFormModal";
 import CommentDeleteModal from "../../Comments/CommentDeleteModal";
+import CommentUpdateFormModal from "../../Comments/CommentUpdateFormModal";
 
 // import CommentCreateFormModal from "../../Comments/CommentCreateFormModal";
 // import CommentDeleteModal from "../../Comments/CommentDeleteModal";
@@ -120,13 +121,13 @@ function StoryDetailsPage() {
               <i class="fa-solid fa-chevron-left"></i>
             </div> */}
 
-              {/* <div>
+              <div>
                 <img
-                  src={photo.url}
-                  alt={photo.name}
+                  src={story.image}
+                  alt={story.title}
                   className="view-photo"
                 ></img>
-              </div> */}
+              </div>
 
               {/* <div>
               <i class="fa-solid fa-chevron-right"></i>
@@ -182,7 +183,10 @@ function StoryDetailsPage() {
                         </div>
                         {user?.id === comment.User.id ||
                         user?.id === story.userId ? (
-                          <CommentDeleteModal comment={comment} />
+                          <>
+                            <CommentDeleteModal comment={comment} />
+                            <CommentUpdateFormModal comment={comment} />
+                          </>
                         ) : (
                           <></>
                         )}
@@ -210,9 +214,10 @@ function StoryDetailsPage() {
                   <div className="comment-label">comments</div>
                 </div>
                 <div className="photo-stats">
-                  {/* <div>
-                  Uploaded on {photo.createdAt && convertDate(photo.createdAt)}
-                </div> */}
+                  <div>
+                    Uploaded on{" "}
+                    {story.createdAt && convertDate(story.createdAt)}
+                  </div>
                 </div>
               </div>
             </div>

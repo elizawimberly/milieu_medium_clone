@@ -3,13 +3,13 @@ import { Modal } from "../../../context/Modal";
 import CommentCreateForm from "./CommentCreateForm";
 import "./CommentCreateForm.css";
 
-function TagCreateFormModal() {
+function CommentCreateFormModal() {
   const [showModal, setShowModal] = useState(false);
 
   return (
     <>
       <button className="modal-button" onClick={() => setShowModal(true)}>
-        Comment
+        Add A Comment
       </button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
@@ -20,4 +20,4 @@ function TagCreateFormModal() {
   );
 }
 
-export default TagCreateFormModal;
+export default CommentCreateFormModal;

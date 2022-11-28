@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { thunkUpdateSingleComment } from "../../../store/storiesReducer";
 
@@ -9,11 +9,32 @@ function CommentUpdateForm({ onClose, comment }) {
 
   const story = storiesState.singleStoryDetails;
 
+  const commentId = comment?.id;
+
   const [commentBody, setComment] = useState(comment.comment);
 
+  useEffect(() => {
+    if (story) {
+      if (commentBody === undefined) setComment(story.Comments[commentId]);
+    }
+  }, [dispatch, comment, story, commentBody, commentId]);
+
   const updateComment = async (e) => {
+    console.log("UPDATE COMMENT ACTIVATED");
+    console.log("commentBody:", commentBody);
+    console.log("comment.id:", comment.id);
+    console.log("story.id:", story.id);
+
+    console.log("updatedComment!!!!!");
+
+    let updatedComment = {
+      comment: commentBody,
+    };
+
     e.preventDefault();
-    await dispatch(thunkUpdateSingleComment(commentBody, comment.id));
+    await dispatch(
+      thunkUpdateSingleComment(updatedComment, comment.id, story.id)
+    );
     onClose();
   };
 
@@ -36,7 +57,11 @@ function CommentUpdateForm({ onClose, comment }) {
               value={commentBody}
             ></textarea>
           </label>
-          <button className="modal-button" type="submit">
+          <button
+            className="modal-button"
+            type="submit"
+            onClick={updateComment}
+          >
             Submit
           </button>
         </form>

@@ -1,23 +1,27 @@
 import React, { useState } from "react";
 import { Modal } from "../../../context/Modal";
 import CommentUpdateForm from "./CommentUpdateForm";
-import "./CommentCreateForm.css";
+// import "./CommentCreateForm.css";
 
-function TagCreateFormModal() {
+function CommentUpdateFormModal({ comment }) {
   const [showModal, setShowModal] = useState(false);
 
   return (
     <>
+      <div>HERE'S THE UPDATE MODAL</div>
       <button className="modal-button" onClick={() => setShowModal(true)}>
-        Comment
+        Edit Comment
       </button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
-          <CommentUpdateForm onClose={() => setShowModal(false)} />
+          <CommentUpdateForm
+            onClose={() => setShowModal(false)}
+            comment={comment}
+          />
         </Modal>
       )}
     </>
   );
 }
 
-export default TagCreateFormModal;
+export default CommentUpdateFormModal;

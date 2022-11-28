@@ -233,14 +233,20 @@ export const thunkCreateSingleComment =
 
 //new
 export const thunkUpdateSingleComment =
-  (updatedComment, commentId) => async (dispatch) => {
-    const response = await fetch(`/api/stories/${commentId}`, {
-      method: "put",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(updatedComment),
-    });
+  (updatedComment, commentId, storyId) => async (dispatch) => {
+    console.log("hit update thunk");
+    console.log("updatedComment", updatedComment);
+    const response = await fetch(
+      `/api/stories/${storyId}/comments/${commentId}`,
+      {
+        method: "put",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(updatedComment),
+      }
+    );
     if (response.ok) {
       const updateComment = await response.json();
+      // console.log("updateComment:", updateComment);
       dispatch(actionUpdateSingleComment(updateComment));
       return updateComment;
     }

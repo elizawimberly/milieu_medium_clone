@@ -142,13 +142,17 @@ def delete_comment(story_id, comment_id):
 @story_routes.route('/<int:story_id>/comments/<int:comment_id>', methods=["PUT"])
 @login_required
 def edit_comment(story_id, comment_id):
+    # print('HIT INSIDE ROUTER!!!!!')
     """
     Query for a comment by id, edits the comment, and returns that comment in a dictionary
     """
     comment = Comment.query.get(comment_id)
+    # print('COMMENT --------->', comment)
     form = CommentForm()
+    # print('FORM --------->', form)
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
+        print('HIT VALIDATE ON SUBMIT')
         data = form.data
         comment.comment = data['comment']
         db.session.commit()
