@@ -8,6 +8,7 @@ import NavBar from "./components/NavBar";
 // import UsersList from "./components/UsersList";
 // import User from "./components/User";
 import SplashPage from "./components/SplashPage";
+import StoryDetailsPage from "./components/Stories/StoryDetailsPage";
 import { authenticate } from "./store/session";
 
 function App() {
@@ -53,6 +54,10 @@ function App() {
         </Route>
 
         {/* STORIES */}
+        <Route path="/stories/:storyId" exact={true}>
+          <StoryDetailsPage />
+        </Route>
+
         {/* <Route path='/explore' exact={true} >
           <Explore />
         </Route> */}

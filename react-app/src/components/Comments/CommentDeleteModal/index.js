@@ -7,6 +7,7 @@ function CommentDeleteModal({ comment }) {
 
   return (
     <>
+      <div>HERE'S THE DELETE MODAL</div>
       <i class="fa-solid fa-trash" onClick={() => setShowModal(true)}></i>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
