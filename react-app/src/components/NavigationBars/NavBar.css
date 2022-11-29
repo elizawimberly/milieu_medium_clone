@@ -1,0 +1,9 @@
+.nav-container {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 30px;
+  margin-right: 30px;
+  height: 80px;
+  align-items: center;
+  border-bottom: 1px solid #e0d8d8;
+}
