@@ -185,10 +185,12 @@ function StoryDetailsPage() {
                         user?.id === story.userId ? (
                           <>
                             <CommentDeleteModal comment={comment} />
-                            <CommentUpdateFormModal comment={comment} />
                           </>
                         ) : (
                           <></>
+                        )}
+                        {user?.id === comment.User.id && (
+                          <CommentUpdateFormModal comment={comment} />
                         )}
                       </div>
                     </div>

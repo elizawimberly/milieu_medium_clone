@@ -24,21 +24,23 @@ def stories():
 @story_routes.route('/', methods=["POST"])
 @login_required
 def add_story():
+
     """
     Create new story and return it in a dictionary
     """
 
     form = StoryForm()
+
     form['csrf_token'].data = request.cookies['csrf_token']
 
     if form.validate_on_submit():
+
       data = form.data
       new_story = Story(
           user_id = current_user.id,
           title = data['title'],
           content = data['content'],
           image = data['image'],
-          created_at = data['createdAt']
           )
       db.session.add(new_story)
       db.session.commit()
@@ -152,7 +154,7 @@ def edit_comment(story_id, comment_id):
     # print('FORM --------->', form)
     form['csrf_token'].data = request.cookies['csrf_token']
     if form.validate_on_submit():
-        print('HIT VALIDATE ON SUBMIT')
+        # print('HIT VALIDATE ON SUBMIT')
         data = form.data
         comment.comment = data['comment']
         db.session.commit()

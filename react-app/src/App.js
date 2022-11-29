@@ -9,6 +9,7 @@ import NavBar from "./components/NavBar";
 // import User from "./components/User";
 import SplashPage from "./components/SplashPage";
 import StoryDetailsPage from "./components/Stories/StoryDetailsPage";
+import StoryCreateForm from "./components/Stories/CreateStoryForm";
 import { authenticate } from "./store/session";
 
 function App() {
@@ -54,6 +55,11 @@ function App() {
         </Route>
 
         {/* STORIES */}
+
+        <Route path="/stories/upload" exact={true}>
+          <StoryCreateForm />
+        </Route>
+
         <Route path="/stories/:storyId" exact={true}>
           <StoryDetailsPage />
         </Route>
