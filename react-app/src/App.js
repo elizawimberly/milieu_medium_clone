@@ -37,15 +37,6 @@ function App() {
           <SplashPage />
         </Route>
 
-        {/* yeet both landing routes once landing is set up to auto render */}
-        {/* <Route path='/landing/no-session' exact={true} >
-          <LandingNoSession />
-        </Route> */}
-
-        {/* <Route path='/landing/session' exact={true} >
-          <LandingSession />
-        </Route> */}
-
         {/* USER */}
         <Route path="/login" exact={true}>
           <LoginForm />
@@ -68,26 +59,6 @@ function App() {
         <Route path="/stories/:storyId/edit" exact={true}>
           <StoryUpdateForm />
         </Route>
-
-        {/* <Route path='/explore' exact={true} >
-          <Explore />
-        </Route> */}
-
-        {/* <Route path="/storystream" exact={true}>
-          <Storystream />
-        </Route>
-
-        <Route path="/stories/upload" exact={true}>
-          <StoryCreateForm />
-        </Route>
-
-        <Route path="/stories/:storyId" exact={true}>
-          <StoryDetailsPage />
-        </Route>
-
-        <Route path="/stories/:storyId/edit" exact={true}>
-          <StoryUpdateForm />
-        </Route> */}
 
         {/* PROTECTED COMPONENTS
         <ProtectedRoute path='/users' exact={true} >
