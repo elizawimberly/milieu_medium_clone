@@ -66,7 +66,7 @@ function StoryCreateForm() {
     setSubmitted(true);
     if (!title) errors.push("Title needs to be between 2 and 500 characters.");
     if (!content)
-      errors.push("Content needs to be between 10 and 6000 characters.");
+      errors.push("Story content needs to be between 10 and 10000 characters.");
     if (
       !image ||
       checkImage ===
@@ -80,8 +80,6 @@ function StoryCreateForm() {
       content,
       image,
     };
-
-    console.log("storyObj:", storyObj);
 
     if (errors.length <= 1 && validationErrors <= 1) {
       newStory = await dispatch(thunkCreateSingleStory(storyObj)).catch(
@@ -154,7 +152,7 @@ function StoryCreateForm() {
                   <input
                     className="inputFieldTypeText"
                     type="text"
-                    name="url"
+                    name="image"
                     placeholder="Add a photo url"
                     onChange={(e) => {
                       setCheckImage(e.target.value);

@@ -7,10 +7,11 @@ import NavBar from "./components/NavBar";
 // import ProtectedRoute from "./components/auth/ProtectedRoute";
 // import UsersList from "./components/UsersList";
 // import User from "./components/User";
+import { authenticate } from "./store/session";
 import SplashPage from "./components/SplashPage";
 import StoryDetailsPage from "./components/Stories/StoryDetailsPage";
 import StoryCreateForm from "./components/Stories/CreateStoryForm";
-import { authenticate } from "./store/session";
+import StoryUpdateForm from "./components/Stories/UpdateStoryForm";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -62,6 +63,10 @@ function App() {
 
         <Route path="/stories/:storyId" exact={true}>
           <StoryDetailsPage />
+        </Route>
+
+        <Route path="/stories/:storyId/edit" exact={true}>
+          <StoryUpdateForm />
         </Route>
 
         {/* <Route path='/explore' exact={true} >
