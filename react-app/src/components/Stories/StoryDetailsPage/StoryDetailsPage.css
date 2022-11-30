@@ -4,3 +4,45 @@
   object-fit: cover;
   margin: 50px 0px;
 }
+
+.story-blurb-title {
+  font-size: 40px;
+  font-weight: 600;
+  padding-bottom: 30px;
+  /* padding-top: 30px; */
+}
+
+.story-blurb-content {
+  padding-bottom: 30px;
+}
+
+.story-blurb-author {
+  padding-bottom: 30px;
+  padding-top: 30px;
+}
+
+.comment-bottom-line-container {
+  padding-bottom: 30px;
+}
+
+.details-update-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.details-update-text {
+  padding-right: 5px;
+}
+
+.details-update-text:hover {
+  text-decoration: underline;
+}
+
+#story-page-fa-icon {
+  padding-left: 5px;
+}
+
+.comment-bottom-line-container {
+  display: flex;
+  flex-direction: column;
+}

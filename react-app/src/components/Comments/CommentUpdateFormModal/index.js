@@ -8,9 +8,8 @@ function CommentUpdateFormModal({ comment }) {
 
   return (
     <>
-      <div>HERE'S THE UPDATE MODAL</div>
       <button className="modal-button" onClick={() => setShowModal(true)}>
-        Edit Comment
+        Edit Your Comment
       </button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>
