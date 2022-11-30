@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 // local files
 import { thunkReadAllStories } from "../../store/storiesReducer";
 import "./SplashPage.css";
+import SingleStoryPreview from "../Stories/SingleStoryPreview";
 
 /******************************* COMPONENT *******************************/
 function SplashPage() {
@@ -42,9 +43,13 @@ function SplashPage() {
           <div className="splash-story-feed">
             {allStoriesArr &&
               allStoriesArr.map((story) => (
-                <Link to={`/stories/${story.id}`} key={`${story.id}`}>
-                  Here's the story link to story id#: {story.id}
-                </Link>
+                // <Link to={`/stories/${story.id}`} key={`${story.id}`}>
+                //   Here's the story link to story id#: {story.id}
+                // </Link>
+                <div key={story.id}>
+                  {/* {story.address} */}
+                  <SingleStoryPreview story={story}></SingleStoryPreview>
+                </div>
               ))}
           </div>
         </div>
