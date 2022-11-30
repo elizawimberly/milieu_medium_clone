@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 //local files
 import LogoutButton from "../auth/LogoutButton";
 import "./NavBar.css";
+import milieuLogo from "../../assets/melieu-70w-logo.png";
 
 const NavBar = () => {
   /****************** access store *******************/
@@ -13,24 +14,42 @@ const NavBar = () => {
 
   /************* conditional components **************/
   let sessionOptions = (
-    <div>
-      <div>
-        <NavLink to="/login" exact={true} activeClassName="active">
-          Login
+    <div className="nav-container-no-session">
+      <div className="nav-container_two">
+        <NavLink
+          className="login"
+          to="/login"
+          exact={true}
+          activeClassName="active"
+        >
+          Sign In
         </NavLink>
       </div>
 
-      <div>
-        <NavLink to="/sign-up" exact={true} activeClassName="active">
-          Sign Up
-        </NavLink>
+      <div className="nav-container_three">
+        <button className="nav-button">
+          <NavLink
+            className="signup"
+            to="/sign-up"
+            exact={true}
+            activeClassName="active"
+          >
+            Get Started
+          </NavLink>
+        </button>
       </div>
+
+      {/* <div>
+        <button className="demo-button" onClick={handleDemo}>
+          Demo User
+        </button>
+      </div> */}
     </div>
   );
 
   if (sessionUser) {
     sessionOptions = (
-      <div>
+      <div className="logout-container">
         <LogoutButton />
       </div>
     );
@@ -39,9 +58,9 @@ const NavBar = () => {
   /****************** COMPONENT ******************/
   return (
     <div className="nav-container">
-      <div>
+      <div className="nav-container_four">
         <NavLink to="/" exact={true} activeClassName="active">
-          Home
+          <img src={milieuLogo} alt="milieu-logo" className="nav-logo" />
         </NavLink>
       </div>
 

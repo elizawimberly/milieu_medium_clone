@@ -1,9 +1,81 @@
 .nav-container {
   display: flex;
   justify-content: space-between;
-  margin-left: 30px;
-  margin-right: 30px;
+  /* margin-left: 30px;
+  margin-right: 30px; */
   height: 80px;
   align-items: center;
-  border-bottom: 1px solid #e0d8d8;
+  border-bottom: 1px solid black;
+  background: #ffc017;
+  color: black;
+  font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 360;
+}
+
+.nav-container-no-session {
+  display: flex;
+  width: 250px;
+  justify-content: space-evenly;
+}
+
+.nav-button {
+  border: none;
+  padding: 10px 30px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  border-radius: 20px;
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  background: rgba(25, 25, 25, 1);
+  color: white;
+}
+
+button:hover {
+  box-shadow: 0 10px 14px 0 rgba(0, 0, 0, 0.24),
+    0 17px 50px 0 rgba(0, 0, 0, 0.19);
+}
+
+.nav-container_two {
+  padding: 15px;
+  border-radius: 20px;
+  display: flex;
+  color: black;
+  margin-top: 10px;
+}
+
+.nav-container_three {
+  padding: 15px;
+  border-radius: 20px;
+  display: flex;
+  color: black;
+}
+
+.nav-container_four {
+  padding-left: 30px;
+}
+
+a {
+  text-decoration: none;
+  color: black;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+.login {
+  color: black;
+}
+
+.signup {
+  color: white;
+}
+
+.nav-logo {
+  padding-top: 10px;
+}
+
+.logout-container {
+  padding-right: 30px;
 }

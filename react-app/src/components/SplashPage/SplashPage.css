@@ -1,0 +1,32 @@
+.splash-title-container {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  background: #ffc017;
+  height: 450px;
+  border-bottom: 1px solid black;
+}
+
+.splash-heading {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding-left: 100px;
+  padding-top: 90px;
+  padding-bottom: 90px;
+}
+
+.splash-big-title {
+  font-size: 100px;
+  font-family: gt-super, Georgia, Cambria, "Times New Roman", Times, serif;
+  font-weight: 400;
+  letter-spacing: -0.05em;
+  padding-bottom: 50px;
+}
+
+.splash-small-title {
+  font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 24px;
+  font-weight: 400;
+  width: 450px;
+}

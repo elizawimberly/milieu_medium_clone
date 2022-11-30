@@ -4,8 +4,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 // local files
-import "./SplashPage.css";
 import { thunkReadAllStories } from "../../store/storiesReducer";
+import "./SplashPage.css";
 
 /******************************* COMPONENT *******************************/
 function SplashPage() {
@@ -29,7 +29,15 @@ function SplashPage() {
   return (
     <>
       <div className="page-wrapper-container">
-        Splash Page
+        <div className="splash-title-container">
+          <div className="splash-heading">
+            <div className="splash-big-title">Stay Curious.</div>
+            <div className="splash-small-title">
+              Discover stories, thinking, and expertise from writers on any
+              topic.
+            </div>
+          </div>
+        </div>
         <div className="splash-component">
           <div className="splash-story-feed">
             {allStoriesArr &&
