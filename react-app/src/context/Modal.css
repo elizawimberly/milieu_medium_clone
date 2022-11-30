@@ -20,7 +20,7 @@
 
 #modal-content {
   position: absolute;
-  background-color:white;
+  background-color: white;
   border-radius: 8px;
 
   min-width: 425px;
@@ -40,7 +40,6 @@
   /* margin-top: 30px; */
   cursor: pointer;
 }
-
 
 /*
 following properties are imported by
@@ -68,9 +67,9 @@ comments: create + delete
   align-items: center;
   max-width: 380px;
   height: 100%;
-  margin: 0px 20px
+  margin: 0px 20px;
 }
-.modal-display-content{
+.modal-display-content {
   margin-bottom: 20px;
   height: 100%;
   min-width: 380px;
@@ -85,7 +84,7 @@ comments: create + delete
   align-items: center;
 }
 .modal-textarea-input-field {
-  outline:none;
+  outline: none;
   min-width: 380px;
   max-width: 380px;
   min-height: 200px;
@@ -94,14 +93,13 @@ comments: create + delete
 }
 
 .modal-button {
-  height: 24px;
+  height: 45px;
   width: 120px;
 
   border: none;
   border-radius: 0.25rem;
   padding-right: 10px;
   margin-bottom: 20px;
-
 
   background-color: #0362db;
   color: #fff;

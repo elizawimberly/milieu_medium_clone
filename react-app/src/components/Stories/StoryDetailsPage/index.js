@@ -75,16 +75,22 @@ function StoryDetailsPage() {
         <div>
           LOGGED IN
           <NavLink to={`/stories/${storyId}/edit`} id="photo-page-fa-icon">
-            <i class="fa-solid fa-pen"></i>
+            <div className="details-update-container">
+              <div className="details-update-text">Update Your Story</div>
+              <i class="fa-solid fa-pen"></i>
+            </div>
           </NavLink>
         </div>
 
-        <div>
-          <i
-            class="fa-solid fa-trash"
-            id="photo-page-fa-icon"
-            onClick={deleteStory}
-          ></i>
+        <div className="details-update-container">
+          <div className="details-update-text" onClick={deleteStory}>
+            Delete Your Story
+            <i
+              class="fa-solid fa-trash"
+              id="story-page-fa-icon"
+              // onClick={deleteStory}
+            ></i>
+          </div>
         </div>
       </>
     );
@@ -134,9 +140,7 @@ function StoryDetailsPage() {
             </div> */}
             </div>
             {user?.id === story?.userId && (
-              <div className="top-half-section-C">
-                USER LOGGED IN {updateStoryButtons}
-              </div>
+              <div className="top-half-section-C">{updateStoryButtons}</div>
             )}
           </div>
 
@@ -153,14 +157,23 @@ function StoryDetailsPage() {
                 <div className="photo-blurb-about-container">
                   {/* <div className="photo-blurb-photographer">{photo.User.username}</div> */}
                   {firstName && lastName && (
-                    <div className="photo-blurb-photographer">
-                      {firstName} {lastName}
+                    <div className="story-blurb-author">
+                      {`Written by ${firstName} ${lastName}`}
+                      {/* {firstName} {lastName} */}
+                      <div className="photo-stats">
+                        <div>
+                          Uploaded on{" "}
+                          {story.createdAt && convertDate(story.createdAt)}
+                        </div>
+                      </div>
                     </div>
                   )}
-                  <div className="photo-blurb-name">
+
+                  <div className="story-blurb-title">
                     {story && story?.title}
                   </div>
-                  <div className="photo-blurb-about">
+
+                  <div className="story-blurb-content">
                     {story && story?.content}
                   </div>
                 </div>
@@ -204,7 +217,7 @@ function StoryDetailsPage() {
               </div>
 
               <div className="add-comment-section">
-                LOGGED IN CREATE COMMENT
+                CREATE COMMENT
                 {user ? <CommentCreateFormModal /> : <></>}
               </div>
             </div>
@@ -214,12 +227,6 @@ function StoryDetailsPage() {
                 <div className="comments-stats">
                   <div className="comment-count">{comments?.length}</div>
                   <div className="comment-label">comments</div>
-                </div>
-                <div className="photo-stats">
-                  <div>
-                    Uploaded on{" "}
-                    {story.createdAt && convertDate(story.createdAt)}
-                  </div>
                 </div>
               </div>
             </div>

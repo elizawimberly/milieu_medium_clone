@@ -1,0 +1,9 @@
+.comment-delete-modal {
+  display: flex;
+  flex-direction: row;
+}
+
+.comment-delete-modal:hover {
+  text-decoration: underline;
+  cursor: pointer;
+}
