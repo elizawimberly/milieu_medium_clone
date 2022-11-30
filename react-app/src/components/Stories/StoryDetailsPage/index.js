@@ -149,6 +149,10 @@ function StoryDetailsPage() {
                   src={story.image}
                   alt={story.title}
                   className="view-photo"
+                  onError={(e) =>
+                    (e.currentTarget.src =
+                      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/330px-No-Image-Placeholder.svg.png")
+                  }
                 ></img>
               </div>
 

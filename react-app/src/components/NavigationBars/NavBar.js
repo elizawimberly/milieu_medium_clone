@@ -49,9 +49,24 @@ const NavBar = () => {
 
   if (sessionUser) {
     sessionOptions = (
-      <div className="logout-container">
-        <LogoutButton />
-      </div>
+      <divn className="nav-container-five">
+        <div className="nav-container_three">
+          <button className="nav-button">
+            <NavLink
+              className="signup"
+              to="/stories/upload"
+              exact={true}
+              activeClassName="active"
+            >
+              Write A Story
+            </NavLink>
+          </button>
+        </div>
+
+        <div className="logout-container">
+          <LogoutButton />
+        </div>
+      </divn>
     );
   }
 

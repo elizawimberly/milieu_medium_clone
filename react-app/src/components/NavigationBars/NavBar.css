@@ -77,5 +77,21 @@ a:hover {
 }
 
 .logout-container {
+  display: flex;
+  flex-direction: row;
   padding-right: 30px;
+}
+
+.nav-container-five {
+  display: flex;
+  flex-direction: row;
+}
+
+#logout-button-id {
+  height: 40px;
+  margin-top: 13px;
+}
+
+#logout-button-id:hover {
+  text-decoration: underline;
 }
