@@ -100,9 +100,26 @@ function StoryDetailsPage() {
   const history = useHistory();
 
   function deleteStory() {
-    dispatch(thunkDeleteSingleStory(storyId));
-    history.push("/");
+    let confirmAction = window.confirm("Are you sure to delete your story?");
+    if (confirmAction) {
+      alert("Your story has successfully been deleted");
+      dispatch(thunkDeleteSingleStory(storyId));
+      history.push("/");
+    } else {
+      alert("Delete canceled");
+    }
   }
+
+  // function deleteStory() {
+  //   // confirmAction
+  //   dispatch(thunkDeleteSingleStory(storyId));
+  //   history.push("/");
+  // }
+
+  // function deleteStory() {
+  //   dispatch(thunkDeleteSingleStory(storyId));
+  //   history.push("/");
+  // }
 
   /**************** render component *****************/
   return (
