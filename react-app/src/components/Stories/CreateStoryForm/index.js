@@ -39,12 +39,20 @@ function StoryCreateForm() {
   // useEffect(() => {
   //   dispatch(thunkReadAllAlbums());
   // }, [dispatch]);
+  const imageCheck = /\.(jpg|jpeg|png|webp|avif|gif|svg)$/;
 
   useEffect(() => {
     let errors = [];
     if (!title) errors.push("Name needs to be between 2 and 50 characters.");
     if (!content)
       errors.push("About needs to be between 10 and 10000 characters.");
+    if (!image.split("?")[0].match(imageCheck)) {
+      errors.push("image must end with valid string");
+      return;
+    }
+    if (image.length < 3 || image.length > 150) {
+      errors.push("please enter the correct length image url");
+    }
     if (
       !image ||
       checkImage ===
@@ -114,77 +122,99 @@ function StoryCreateForm() {
   return (
     <>
       <div className="page-wrapper-container">
-        <div id="PhotoCreateForm-component">
-          <form className="photo-form-container" onSubmit={handleSubmit}>
-            <div className="mock-upload-navbar">
-              <button className="photo-submit-button" type="submit">
-                Upload Your Story
-              </button>
-            </div>
-            <div className="photo-form-top-sub-container">
-              <div className="photo-form-top-left-sub-container">
-                <label>
-                  <input
-                    className="inputFieldTypeText"
-                    id="input-photo-name"
-                    type="text"
-                    name="title"
-                    placeholder="Add a title"
-                    onChange={(e) => setTitle(e.target.value)}
-                    value={title}
-                    required={true}
-                    minLength={2}
-                    maxLength={500}
-                  />
-                  <input
-                    className="inputFieldTypeText"
-                    type="text"
-                    name="content"
-                    placeholder="Add your new article"
-                    onChange={(e) => setContent(e.target.value)}
-                    value={content}
-                    required={true}
-                    minLength={2}
-                    maxLength={10000}
-                  />
-                </label>
-                <label>
-                  <input
-                    className="inputFieldTypeText"
-                    type="text"
-                    name="image"
-                    placeholder="Add a photo url"
-                    onChange={(e) => {
-                      setCheckImage(e.target.value);
-                      setImage(e.target.value);
-                    }}
-                    value={image}
-                    required={true}
-                    minLength={2}
-                    maxLength={500}
-                  />
-                </label>
+        <div className="LoginForm-and-SignUpForm-components">
+          <div className="login-signup-form" id="login-form">
+            <form onSubmit={handleSubmit}>
+              <div className="photo-form-top-sub-container">
+                <div className="photo-form-top-left-sub-container">
+                  <label>
+                    <input
+                      className="login-signup-form-input-field"
+                      id="input-photo-name"
+                      type="text"
+                      name="title"
+                      placeholder="Add a title"
+                      onChange={(e) => setTitle(e.target.value)}
+                      value={title}
+                      required={true}
+                      minLength={2}
+                      maxLength={500}
+                    />
+                    <label>
+                      <input
+                        className="login-signup-form-input-field"
+                        type="text"
+                        name="image"
+                        placeholder="Add a photo url"
+                        onChange={(e) => {
+                          setCheckImage(e.target.value);
+                          setImage(e.target.value);
+                        }}
+                        value={image}
+                        required={true}
+                        minLength={2}
+                        maxLength={500}
+                        onError={(e) =>
+                          (e.currentTarget.src =
+                            "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/330px-No-Image-Placeholder.svg.png")
+                        }
+                      />
+                    </label>
+                    <input
+                      className="login-signup-form-input-field"
+                      type="text"
+                      name="content"
+                      placeholder="Add your new article"
+                      onChange={(e) => setContent(e.target.value)}
+                      value={content}
+                      required={true}
+                      minLength={2}
+                      maxLength={10000}
+                    />
+                  </label>
+                  {/* <label>
+                    <input
+                      className="login-signup-form-input-field"
+                      type="text"
+                      name="image"
+                      placeholder="Add a photo url"
+                      onChange={(e) => {
+                        setCheckImage(e.target.value);
+                        setImage(e.target.value);
+                      }}
+                      value={image}
+                      required={true}
+                      minLength={2}
+                      maxLength={500}
+                    />
+                  </label> */}
 
-                <div className="errors-container">
-                  {submitted &&
-                    validationErrors &&
-                    validationErrors.map((error, i = 0) => (
-                      <div className="form-errors" key={i}>
-                        {error}
-                      </div>
-                    ))}
+                  <div className="errors-container">
+                    {submitted &&
+                      validationErrors &&
+                      validationErrors.map((error, i = 0) => (
+                        <div className="form-errors" key={i}>
+                          {error}
+                        </div>
+                      ))}
+                  </div>
                 </div>
-              </div>
 
-              {/* <div className="photo-form-top-right-sub-container">
+                {/* <div className="photo-form-top-right-sub-container">
                 {url && (
                   <div className="view-uploaded-image">
                     <img onError={onError} alt="" src={url} />
                   </div>
                 )}
               </div> */}
-            </div>
-          </form>
+              </div>
+              <div className="mock-upload-navbar">
+                <button className="login-signup-form-button" type="submit">
+                  Upload Your Story
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
       </div>
       {/* <FooterAccount /> */}
