@@ -14,74 +14,85 @@ function StoryCreateForm() {
   /****************** access store *******************/
   const sessionUser = useSelector((state) => state.session.user);
 
-  /************ key into pertinent values ************/
-  // const longDate = new Date();
-  // const year = longDate.getFullYear();
-  // let month = longDate.getMonth() + 1;
-  // let day = longDate.getDate() + 1;
-  // if (month < 10) month = `0${month}`;
-  // if (day < 10) day = `0${Number(day)}`;
-  // const date = `${year}-${month}-${day}`;
   /****************** manage state *******************/
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [image, setImage] = useState("");
 
-  const [checkImage, setCheckImage] = useState("");
+  // const [checkImage, setCheckImage] = useState("");
   const [validationErrors, setValidationErrors] = useState([]);
 
   const [submitted, setSubmitted] = useState(false);
-  const [dropDown, setDropDown] = useState("album-dropdown-hide");
+  // const [dropDown, setDropDown] = useState("album-dropdown-hide");
 
   /************ reducer/API communication ************/
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   dispatch(thunkReadAllAlbums());
-  // }, [dispatch]);
-  const imageCheck = /\.(jpg|jpeg|png|webp|avif|gif|svg)$/;
-
   useEffect(() => {
     let errors = [];
-    if (!title) errors.push("Name needs to be between 2 and 50 characters.");
-    if (!content)
-      errors.push("About needs to be between 10 and 10000 characters.");
-    if (!image.split("?")[0].match(imageCheck)) {
-      errors.push("image must end with valid string");
-      return;
+    if (title.length < 3) {
+      errors.push("Title needs to be between 3 and 50 characters.");
     }
-    if (image.length < 3 || image.length > 150) {
-      errors.push("please enter the correct length image url");
+
+    if (content.length < 5 || content.length > 10000) {
+      errors.push(
+        "Please enter content that is between 5 and 10,000 characters"
+      );
     }
+    if (image.length < 5 || image.length > 150) {
+      errors.push(
+        "Please enter an image url that is between 5 to 150 characters"
+      );
+    }
+
     if (
-      !image ||
-      checkImage ===
-        "https://learn.getgrav.org/user/pages/11.troubleshooting/01.page-not-found/error-404.png"
-    )
-      errors.push("You must enter a valid url");
+      image &&
+      !image.endsWith(".jpg") &&
+      !image.endsWith(".jpeg") &&
+      !image.endsWith(".png") &&
+      !image.endsWith(".webp") &&
+      !image.endsWith(".avif") &&
+      !image.endsWith(".gif") &&
+      !image.endsWith(".svg")
+    ) {
+      errors.push(
+        "Image url must end with jpg, jpeg, png, webp, avif, gif, or svg"
+      );
+    }
+    if (image && !image.startsWith("http") && !image.endsWith("https")) {
+      errors.push("Image url must start with http or https");
+    }
+
     setValidationErrors(errors);
-  }, [submitted, title, content, image, checkImage]);
+  }, [submitted, title, content, image]);
 
   /***************** handle events *******************/
   const history = useHistory();
+
+  const updateTitle = (e) => {
+    console.log("validationErrors:", validationErrors);
+    console.log(e.target.value);
+    if (title.length < 5) {
+      console.log("");
+      console.log("title:", title);
+      console.log("title.length", title.length);
+    }
+    setTitle(e.target.value);
+  };
 
   /***************** handle submit *******************/
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitted(true);
+
+    //NEW CODE:
+    if (validationErrors.length) {
+      return;
+    }
+
     let errors = [];
     let newStory;
-    setSubmitted(true);
-    if (!title) errors.push("Title needs to be between 2 and 500 characters.");
-    if (!content)
-      errors.push("Story content needs to be between 10 and 10000 characters.");
-    if (
-      !image ||
-      checkImage ===
-        "https://learn.getgrav.org/user/pages/11.troubleshooting/01.page-not-found/error-404.png"
-    )
-      errors.push("You must enter a valid url");
-    if (errors.length >= 1) setValidationErrors(errors);
 
     let storyObj = {
       title,
@@ -99,7 +110,6 @@ function StoryCreateForm() {
       );
     }
     if (errors.length <= 0) {
-      console.log("newStory:", newStory);
       setTitle("");
       setContent("");
       setImage("");
@@ -108,14 +118,6 @@ function StoryCreateForm() {
   };
 
   /***************** handle errors *******************/
-
-  // const onError = (e) => {
-  //   setCheckUrl(
-  //     "https://learn.getgrav.org/user/pages/11.troubleshooting/01.page-not-found/error-404.png"
-  //   );
-  //   e.target.src =
-  //     "https://learn.getgrav.org/user/pages/11.troubleshooting/01.page-not-found/error-404.png";
-  // };
 
   /**************** render component *****************/
   if (!sessionUser) return <Redirect to="/" />;
@@ -135,10 +137,11 @@ function StoryCreateForm() {
                       name="title"
                       placeholder="Add a title"
                       onChange={(e) => setTitle(e.target.value)}
+                      // onChange={updateTitle}
                       value={title}
                       required={true}
-                      minLength={2}
-                      maxLength={500}
+                      // minLength={3}
+                      // maxLength={500}
                     />
                     <label>
                       <input
@@ -147,13 +150,12 @@ function StoryCreateForm() {
                         name="image"
                         placeholder="Add a photo url"
                         onChange={(e) => {
-                          setCheckImage(e.target.value);
                           setImage(e.target.value);
                         }}
                         value={image}
                         required={true}
-                        minLength={2}
-                        maxLength={500}
+                        // minLength={2}
+                        // maxLength={500}
                         onError={(e) =>
                           (e.currentTarget.src =
                             "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/330px-No-Image-Placeholder.svg.png")
@@ -168,26 +170,10 @@ function StoryCreateForm() {
                       onChange={(e) => setContent(e.target.value)}
                       value={content}
                       required={true}
-                      minLength={2}
-                      maxLength={10000}
+                      // minLength={2}
+                      // maxLength={10000}
                     />
                   </label>
-                  {/* <label>
-                    <input
-                      className="login-signup-form-input-field"
-                      type="text"
-                      name="image"
-                      placeholder="Add a photo url"
-                      onChange={(e) => {
-                        setCheckImage(e.target.value);
-                        setImage(e.target.value);
-                      }}
-                      value={image}
-                      required={true}
-                      minLength={2}
-                      maxLength={500}
-                    />
-                  </label> */}
 
                   <div className="errors-container">
                     {submitted &&
@@ -199,14 +185,6 @@ function StoryCreateForm() {
                       ))}
                   </div>
                 </div>
-
-                {/* <div className="photo-form-top-right-sub-container">
-                {url && (
-                  <div className="view-uploaded-image">
-                    <img onError={onError} alt="" src={url} />
-                  </div>
-                )}
-              </div> */}
               </div>
               <div className="mock-upload-navbar">
                 <button className="login-signup-form-button" type="submit">
