@@ -1,1 +1,14 @@
 /* TODO Add site wide styles */
+* {
+  font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.page-wrapper-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  z-index: inherit;
+  /* background-color: red; */
+  min-width: 100%;
+  /* align-items: center; */
+}
