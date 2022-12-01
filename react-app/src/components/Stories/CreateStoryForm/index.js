@@ -69,17 +69,6 @@ function StoryCreateForm() {
   /***************** handle events *******************/
   const history = useHistory();
 
-  const updateTitle = (e) => {
-    console.log("validationErrors:", validationErrors);
-    console.log(e.target.value);
-    if (title.length < 5) {
-      console.log("");
-      console.log("title:", title);
-      console.log("title.length", title.length);
-    }
-    setTitle(e.target.value);
-  };
-
   /***************** handle submit *******************/
 
   const handleSubmit = async (e) => {
