@@ -12,6 +12,7 @@ import SplashPage from "./components/SplashPage";
 import StoryDetailsPage from "./components/Stories/StoryDetailsPage";
 import StoryCreateForm from "./components/Stories/CreateStoryForm";
 import StoryUpdateForm from "./components/Stories/UpdateStoryForm";
+import Footer from "./components/Footer";
 
 function App() {
   const [loaded, setLoaded] = useState(false);
@@ -71,6 +72,7 @@ function App() {
 
         <Route>Page Not Found</Route>
       </Switch>
+      <Footer />
     </BrowserRouter>
   );
 }
