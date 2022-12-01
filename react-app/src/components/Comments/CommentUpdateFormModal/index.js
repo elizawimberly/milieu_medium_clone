@@ -8,8 +8,12 @@ function CommentUpdateFormModal({ comment }) {
 
   return (
     <>
-      <button className="modal-button" onClick={() => setShowModal(true)}>
-        Edit Your Comment
+      <button
+        className="modal-button"
+        id="edit-button"
+        onClick={() => setShowModal(true)}
+      >
+        Edit Your Comment <i class="fa-solid fa-pen"></i>
       </button>
       {showModal && (
         <Modal onClose={() => setShowModal(false)}>

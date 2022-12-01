@@ -64,24 +64,27 @@ function StoryDetailsPage() {
     updateStoryButtons = (
       <>
         <div>
-          <NavLink to={`/stories/${storyId}/edit`} id="photo-page-fa-icon">
-            <div className="details-update-container">
-              <div className="details-update-text">Update Your Story</div>
-              <i class="fa-solid fa-pen"></i>
+          <button className="modal-button" id="user-button">
+            <NavLink to={`/stories/${storyId}/edit`} id="photo-page-fa-icon">
+              <div className="details-update-container">
+                <div className="details-update-text">Update Your Story</div>
+                <i class="fa-solid fa-pen"></i>
+              </div>
+            </NavLink>
+          </button>
+        </div>
+        <button className="modal-button" id="user-button">
+          <div className="details-update-container">
+            <div className="details-update-text" onClick={deleteStory}>
+              Delete Your Story
+              <i
+                class="fa-solid fa-trash"
+                id="story-page-fa-icon"
+                // onClick={deleteStory}
+              ></i>
             </div>
-          </NavLink>
-        </div>
-
-        <div className="details-update-container">
-          <div className="details-update-text" onClick={deleteStory}>
-            Delete Your Story
-            <i
-              class="fa-solid fa-trash"
-              id="story-page-fa-icon"
-              // onClick={deleteStory}
-            ></i>
           </div>
-        </div>
+        </button>
       </>
     );
   }
@@ -160,18 +163,18 @@ function StoryDetailsPage() {
                       // onMouseLeave={() => setIsShown(false)}
                     >
                       <div className="comment-text-container">
-                        <div
-                          className="comment-text"
-                          className="comment-text-user"
-                        >
+                        <div className="comment-text" id="comment-text-user">
                           {`${comment.User.firstName} ${comment.User.lastName} says`}
                         </div>
                         <div className="comment-text">{comment.comment}</div>
-                      </div>
-                      <div className="comment-bottom-line-container">
                         <div className="comment-createdAt">
                           {convertDate(comment.createdAt)}
                         </div>
+                      </div>
+                      <div className="comment-bottom-line-container">
+                        {/* <div className="comment-createdAt">
+                          {convertDate(comment.createdAt)}
+                        </div> */}
                         {user?.id === comment.User.id ||
                         user?.id === story.userId ? (
                           <>
@@ -198,10 +201,6 @@ function StoryDetailsPage() {
                   {user ? <CommentCreateFormModal /> : <></>}
                 </div>
               </div>
-
-              {/* <div className="add-comment-section">
-                {user ? <CommentCreateFormModal /> : <></>}
-              </div> */}
 
               {/* <div className="bottom-half-right">
                 <div className="stats-container">

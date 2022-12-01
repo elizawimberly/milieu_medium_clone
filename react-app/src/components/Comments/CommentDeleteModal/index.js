@@ -8,16 +8,20 @@ function CommentDeleteModal({ comment }) {
 
   return (
     <div className="comment-delete-modal">
-      <i class="fa-solid fa-trash" onClick={() => setShowModal(true)}></i>
-      <div onClick={() => setShowModal(true)}>Delete this comment </div>
-      {showModal && (
-        <Modal onClose={() => setShowModal(false)}>
-          <CommentDeleteConfirmation
-            onClose={() => setShowModal(false)}
-            comment={comment}
-          />
-        </Modal>
-      )}
+      <button className="modal-button">
+        <div onClick={() => setShowModal(true)}>
+          Delete this comment <i class="fa-solid fa-trash"></i>
+        </div>
+        {/* <i class="fa-solid fa-trash" onClick={() => setShowModal(true)}></i> */}
+        {showModal && (
+          <Modal onClose={() => setShowModal(false)}>
+            <CommentDeleteConfirmation
+              onClose={() => setShowModal(false)}
+              comment={comment}
+            />
+          </Modal>
+        )}
+      </button>
     </div>
   );
 }
