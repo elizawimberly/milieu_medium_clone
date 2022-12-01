@@ -1,0 +1,30 @@
+/* #create-form {
+  width: 85%;
+  height: 600px;
+  border: 3px solid red;
+} */
+
+.story-form-top-left-sub-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#title-field {
+  /* background-color: red; */
+  /* width: 100%; */
+  width: 800px;
+}
+
+#image-field {
+  width: 800px;
+}
+
+#story-field {
+  width: 800px;
+  height: 400px;
+  word-wrap: break-word;
+  white-space: pre-wrap;
+  word-break: break-word;
+  resize: none;
+}

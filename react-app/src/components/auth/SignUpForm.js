@@ -29,8 +29,10 @@ const SignUpForm = () => {
     e.preventDefault();
     if (password !== repeatPassword)
       validationErrors.push("Those passwords didn't match. Please try again.");
-    if (!email.includes("@"))
-      validationErrors.push("Please enter a valid email address");
+    if (!email.includes("@") || !email.includes("."))
+      validationErrors.push(
+        "Please enter a valid email address that includes @ and a period"
+      );
     setErrors(validationErrors);
     if (validationErrors.length <= 0) {
       const data = await dispatch(
@@ -76,118 +78,125 @@ const SignUpForm = () => {
   }
 
   return (
-    <div>
-      <form onSubmit={onSignUp}>
-        <div>
-          <label></label>
-          <input
-            type="text"
-            name="firstName"
-            placeholder="First name"
-            onChange={updateFirstName}
-            value={firstName}
-            required={true}
-            minLength={2}
-            maxLength={50}
-            className="login-signup-form-input-field"
-          ></input>
-        </div>
-
-        <div>
-          <label></label>
-          <input
-            type="text"
-            name="lastName"
-            placeholder="Last name"
-            onChange={updateLastName}
-            value={lastName}
-            required={true}
-            minLength={2}
-            maxLength={50}
-            className="login-signup-form-input-field"
-          ></input>
-        </div>
-
-        <div>
-          <label></label>
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            onChange={updateUsername}
-            value={username}
-            required={true}
-            minLength={2}
-            maxLength={50}
-            className="login-signup-form-input-field"
-          ></input>
-        </div>
-
-        <div>
-          <label></label>
-          <input
-            type="text"
-            name="email"
-            placeholder="Email address"
-            onChange={updateEmail}
-            value={email}
-            required={true}
-            minLength={2}
-            maxLength={50}
-            className="login-signup-form-input-field"
-          ></input>
-        </div>
-
-        <div>
-          <label></label>
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={updatePassword}
-            value={password}
-            required={true}
-            minLength={2}
-            maxLength={50}
-            className="login-signup-form-input-field"
-          ></input>
-        </div>
-
-        <div>
-          <label></label>
-          <input
-            type="password"
-            name="repeat_password"
-            placeholder="Confirm password"
-            onChange={updateRepeatPassword}
-            value={repeatPassword}
-            required={true}
-            minLength={2}
-            maxLength={50}
-            className="login-signup-form-input-field"
-          ></input>
-        </div>
-
-        <div className="errors-container">
-          {errors.map((error, ind) => (
-            <div key={ind} className="form-errors">
-              {error}
+    <div className="page-wrapper-container">
+      <div className="LoginForm-and-SignUpForm-components">
+        <div className="login-signup-form" id="login-form">
+          <div>
+            <p className="login-signup-form-prompt">Sign Up for Melieu</p>
+          </div>
+          <form onSubmit={onSignUp}>
+            <div>
+              <label></label>
+              <input
+                type="text"
+                name="firstName"
+                placeholder="First name"
+                onChange={updateFirstName}
+                value={firstName}
+                required={true}
+                minLength={2}
+                maxLength={50}
+                className="login-signup-form-input-field"
+              ></input>
             </div>
-          ))}
+
+            <div>
+              <label></label>
+              <input
+                type="text"
+                name="lastName"
+                placeholder="Last name"
+                onChange={updateLastName}
+                value={lastName}
+                required={true}
+                minLength={2}
+                maxLength={50}
+                className="login-signup-form-input-field"
+              ></input>
+            </div>
+
+            <div>
+              <label></label>
+              <input
+                type="text"
+                name="username"
+                placeholder="Username"
+                onChange={updateUsername}
+                value={username}
+                required={true}
+                minLength={2}
+                maxLength={50}
+                className="login-signup-form-input-field"
+              ></input>
+            </div>
+
+            <div>
+              <label></label>
+              <input
+                type="text"
+                name="email"
+                placeholder="Email address"
+                onChange={updateEmail}
+                value={email}
+                required={true}
+                minLength={2}
+                maxLength={50}
+                className="login-signup-form-input-field"
+              ></input>
+            </div>
+
+            <div>
+              <label></label>
+              <input
+                type="password"
+                name="password"
+                placeholder="Password"
+                onChange={updatePassword}
+                value={password}
+                required={true}
+                minLength={2}
+                maxLength={50}
+                className="login-signup-form-input-field"
+              ></input>
+            </div>
+
+            <div>
+              <label></label>
+              <input
+                type="password"
+                name="repeat_password"
+                placeholder="Confirm password"
+                onChange={updateRepeatPassword}
+                value={repeatPassword}
+                required={true}
+                minLength={2}
+                maxLength={50}
+                className="login-signup-form-input-field"
+              ></input>
+            </div>
+
+            <div className="errors-container">
+              {errors.map((error, ind) => (
+                <div key={ind} className="form-errors">
+                  {error}
+                </div>
+              ))}
+            </div>
+
+            <button type="submit" className="login-signup-form-button">
+              Sign up
+            </button>
+          </form>
+
+          <div className="form-redirect-prompt">
+            Already a Milieu member?{" "}
+            <span>
+              <NavLink to="/login" exact={true} className="form-link">
+                Log in here.
+              </NavLink>
+            </span>
+          </div>
         </div>
-
-        <button type="submit" className="login-signup-form-button">
-          Sign up
-        </button>
-      </form>
-
-      <div className="form-redirect-prompt">
-        Already a Milieu member?{" "}
-        <span>
-          <NavLink to="/login" exact={true} className="form-link">
-            Log in here.
-          </NavLink>
-        </span>
       </div>
     </div>
   );
