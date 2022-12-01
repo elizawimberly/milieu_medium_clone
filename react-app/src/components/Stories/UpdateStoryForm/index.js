@@ -11,6 +11,7 @@ import {
 } from "../../../store/storiesReducer";
 
 import "./UpdateStoryForm.css";
+import defaultPhoto from "../../../assets/placeholder.jpeg";
 // import FooterAccount from "../../Footer/FooterAccount";
 
 /********************** COMPONENT ******************/
@@ -70,9 +71,9 @@ function StoryUpdateForm() {
         "Please enter content that is between 5 and 10,000 characters"
       );
     }
-    if (image && (image.length < 5 || image.length > 150)) {
+    if (image && (image.length < 5 || image.length > 500)) {
       errors.push(
-        "Please enter an image url that is between 5 to 150 characters"
+        "Please enter an image url that is between 5 to 500 characters"
       );
     }
 
@@ -141,8 +142,8 @@ function StoryUpdateForm() {
     <>
       <div className="page-wrapper-container">
         {story.title && loaded && (
-          <div id="LoginForm-and-SignUpForm-components">
-            <div className="login-signup-form" id="login-form">
+          <div className="LoginForm-and-SignUpForm-components">
+            <div className="login-signup-form" id="create-form">
               <form onSubmit={handleSubmit}>
                 {/* <div className="mock-upload-navbar">
                   <button
@@ -154,10 +155,11 @@ function StoryUpdateForm() {
                   </button>
                 </div> */}
                 <div className="photo-form-top-sub-container">
-                  <div className="photo-form-top-left-sub-container">
+                  <div className="story-form-top-left-sub-container">
                     <label>
                       <input
                         className="login-signup-form-input-field"
+                        id="title-field"
                         type="text"
                         name="title"
                         placeholder="Add a title"
@@ -172,18 +174,8 @@ function StoryUpdateForm() {
                     <label>
                       <input
                         className="login-signup-form-input-field"
-                        type="text"
-                        name="content"
-                        placeholder="Update your article"
-                        onChange={(e) => setContent(e.target.value)}
-                        value={content}
-                        required={true}
-                      />
-                    </label>
-
-                    <label>
-                      <input
-                        className="login-signup-form-input-field"
+                        // id="title-field"
+                        id="image-field"
                         type="text"
                         name="image"
                         placeholder="Add a photo url"
@@ -192,6 +184,20 @@ function StoryUpdateForm() {
                         required={true}
                         // minLength={2}
                         // maxLength={500}
+                        onError={(e) => (e.currentTarget.src = defaultPhoto)}
+                      />
+                    </label>
+
+                    <label>
+                      <textarea
+                        className="login-signup-form-input-field"
+                        type="text"
+                        id="story-field"
+                        name="content"
+                        placeholder="Update your article"
+                        onChange={(e) => setContent(e.target.value)}
+                        value={content}
+                        required={true}
                       />
                     </label>
 

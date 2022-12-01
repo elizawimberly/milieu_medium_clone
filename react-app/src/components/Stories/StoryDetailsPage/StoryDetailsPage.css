@@ -6,19 +6,24 @@
 }
 
 .story-blurb-title {
-  font-size: 40px;
+  font-size: 50px;
   font-weight: 600;
-  padding-bottom: 30px;
-  /* padding-top: 30px; */
+  /* padding-bottom: 30px; */
+  padding-top: 30px;
 }
 
 .story-blurb-content {
   padding-bottom: 30px;
 }
 
-.story-blurb-author {
+.story-blurb-outer {
   padding-bottom: 30px;
   padding-top: 30px;
+}
+
+.story-blurb-author {
+  font-size: 20px;
+  padding-bottom: 10px;
 }
 
 .comment-bottom-line-container {
@@ -45,4 +50,14 @@
 .comment-bottom-line-container {
   display: flex;
   flex-direction: column;
+}
+
+.display-comment {
+  /* background-color: red; */
+  border: 3px solid rgb(177, 190, 203);
+  margin-bottom: 20px;
+}
+
+.comment-text-container {
+  /* border: 3px solid lightslategrey; */
 }

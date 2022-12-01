@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from "react-redux";
 // local files
 import { thunkCreateSingleStory } from "../../../store/storiesReducer";
 import "./CreateStoryForm.css";
+import defaultPhoto from "../../../assets/placeholder.jpeg";
 
 // import FooterAccount from "../../Footer/FooterAccount";
 
@@ -36,12 +37,12 @@ function StoryCreateForm() {
 
     if (content.length < 5 || content.length > 10000) {
       errors.push(
-        "Please enter content that is between 5 and 10,000 characters"
+        "Please enter story content that is between 5 and 10,000 characters"
       );
     }
-    if (image.length < 5 || image.length > 150) {
+    if (image.length < 5 || image.length > 500) {
       errors.push(
-        "Please enter an image url that is between 5 to 150 characters"
+        "Please enter an image url that is between 5 to 500 characters"
       );
     }
 
@@ -117,11 +118,11 @@ function StoryCreateForm() {
           <div className="login-signup-form" id="login-form">
             <form onSubmit={handleSubmit}>
               <div className="photo-form-top-sub-container">
-                <div className="photo-form-top-left-sub-container">
+                <div className="story-form-top-left-sub-container">
                   <label>
                     <input
                       className="login-signup-form-input-field"
-                      id="input-photo-name"
+                      id="title-field"
                       type="text"
                       name="title"
                       placeholder="Add a title"
@@ -135,6 +136,7 @@ function StoryCreateForm() {
                     <label>
                       <input
                         className="login-signup-form-input-field"
+                        id="image-field"
                         type="text"
                         name="image"
                         placeholder="Add a photo url"
@@ -145,14 +147,16 @@ function StoryCreateForm() {
                         required={true}
                         // minLength={2}
                         // maxLength={500}
-                        onError={(e) =>
-                          (e.currentTarget.src =
-                            "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/330px-No-Image-Placeholder.svg.png")
-                        }
+                        // onError={(e) =>
+                        //   (e.currentTarget.src =
+                        //     "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/330px-No-Image-Placeholder.svg.png")
+                        // }
+                        onError={(e) => (e.currentTarget.src = defaultPhoto)}
                       />
                     </label>
-                    <input
+                    <textarea
                       className="login-signup-form-input-field"
+                      id="story-field"
                       type="text"
                       name="content"
                       placeholder="Add your new article"
@@ -173,12 +177,15 @@ function StoryCreateForm() {
                         </div>
                       ))}
                   </div>
+
+                  <div className="mock-upload-navbar">
+                    <button className="login-signup-form-button" type="submit">
+                      Upload Your Story
+                    </button>
+                  </div>
+
+                  {/* button here */}
                 </div>
-              </div>
-              <div className="mock-upload-navbar">
-                <button className="login-signup-form-button" type="submit">
-                  Upload Your Story
-                </button>
               </div>
             </form>
           </div>

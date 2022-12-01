@@ -14,12 +14,8 @@ import { convertDate } from "../../../component-resources";
 import CommentCreateFormModal from "../../Comments/CommentCreateFormModal";
 import CommentDeleteModal from "../../Comments/CommentDeleteModal";
 import CommentUpdateFormModal from "../../Comments/CommentUpdateFormModal";
+import defaultPhoto from "../../../assets/placeholder.jpeg";
 
-// import CommentCreateFormModal from "../../Comments/CommentCreateFormModal";
-// import CommentDeleteModal from "../../Comments/CommentDeleteModal";
-// import TagCreateFormModal from "../../Tags/TagCreateFormModal";
-// import TagDeleteModal from "../../Tags/TagDeleteModal";
-// import buddyIcon from "../../../assets/buddyicon.png";
 // import FooterAccount from "../../Footer/FooterAccount";
 
 /******************************* COMPONENT *******************************/
@@ -65,15 +61,9 @@ function StoryDetailsPage() {
     </div>
   );
   if (user) {
-    // storystreamButton = (
-    //   <NavLink to="/photostream" id="back-to-photostream">
-    //     <i className="fa-solid fa-arrow-left-long"></i> Photostream
-    //   </NavLink>
-    // );
     updateStoryButtons = (
       <>
         <div>
-          LOGGED IN
           <NavLink to={`/stories/${storyId}/edit`} id="photo-page-fa-icon">
             <div className="details-update-container">
               <div className="details-update-text">Update Your Story</div>
@@ -110,35 +100,12 @@ function StoryDetailsPage() {
     }
   }
 
-  // function deleteStory() {
-  //   // confirmAction
-  //   dispatch(thunkDeleteSingleStory(storyId));
-  //   history.push("/");
-  // }
-
-  // function deleteStory() {
-  //   dispatch(thunkDeleteSingleStory(storyId));
-  //   history.push("/");
-  // }
-
   /**************** render component *****************/
   return (
     <>
       <div className="page-wrapper-container">
         <div id="PhotoDetailsPage-component">
-          <div
-            className="top-half"
-            // style={{
-            //   backgroundColor: "#212124",
-            //   backgroundRepeat: "no-repeat",
-            //   backgroundPosition: "center",
-            //   backgroundSize: "cover",
-            // }}
-          >
-            {/* <div className="top-half-section-A">
-              {user?.id === photo?.userId && <div>{photostreamButton}</div>}
-            </div> */}
-
+          <div className="top-half">
             <div className="top-half-section-B">
               {/* <div>
               <i class="fa-solid fa-chevron-left"></i>
@@ -147,12 +114,14 @@ function StoryDetailsPage() {
               <div>
                 <img
                   src={story.image}
+                  // src={defaultPhoto}
                   alt={story.title}
                   className="view-photo"
-                  onError={(e) =>
-                    (e.currentTarget.src =
-                      "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/330px-No-Image-Placeholder.svg.png")
-                  }
+                  // onError={(e) =>
+                  //   (e.currentTarget.src =
+                  //     "https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/330px-No-Image-Placeholder.svg.png")
+                  // }
+                  onError={(e) => (e.currentTarget.src = defaultPhoto)}
                 ></img>
               </div>
 
@@ -176,11 +145,16 @@ function StoryDetailsPage() {
                 ></img> */}
                 </div>
                 <div className="photo-blurb-about-container">
+                  <div className="story-blurb-title">
+                    {story && story?.title}
+                  </div>
                   {/* <div className="photo-blurb-photographer">{photo.User.username}</div> */}
                   {firstName && lastName && (
-                    <div className="story-blurb-author">
-                      {`Written by ${firstName} ${lastName}`}
-                      {/* {firstName} {lastName} */}
+                    <div className="story-blurb-outer">
+                      <div className="story-blurb-author">
+                        {`Written by ${firstName} ${lastName}`}
+                        {/* {firstName} {lastName} */}
+                      </div>
                       <div className="photo-stats">
                         <div>
                           Uploaded on{" "}
@@ -189,10 +163,6 @@ function StoryDetailsPage() {
                       </div>
                     </div>
                   )}
-
-                  <div className="story-blurb-title">
-                    {story && story?.title}
-                  </div>
 
                   <div className="story-blurb-content">
                     {story && story?.content}
@@ -238,7 +208,6 @@ function StoryDetailsPage() {
               </div>
 
               <div className="add-comment-section">
-                CREATE COMMENT
                 {user ? <CommentCreateFormModal /> : <></>}
               </div>
             </div>

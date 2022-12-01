@@ -1,6 +1,7 @@
 /* TODO Add site wide styles */
 * {
   font-family: sohne, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 14px;
 }
 
 .page-wrapper-container {
