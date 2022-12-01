@@ -107,10 +107,6 @@ function StoryDetailsPage() {
         <div id="PhotoDetailsPage-component">
           <div className="top-half">
             <div className="top-half-section-B">
-              {/* <div>
-              <i class="fa-solid fa-chevron-left"></i>
-            </div> */}
-
               <div>
                 <img
                   src={story.image}
@@ -124,10 +120,6 @@ function StoryDetailsPage() {
                   onError={(e) => (e.currentTarget.src = defaultPhoto)}
                 ></img>
               </div>
-
-              {/* <div>
-              <i class="fa-solid fa-chevron-right"></i>
-            </div> */}
             </div>
             {user?.id === story?.userId && (
               <div className="top-half-section-C">{updateStoryButtons}</div>
@@ -135,38 +127,27 @@ function StoryDetailsPage() {
           </div>
 
           <div className="bottom-half">
-            <div className="bottom-half-left">
-              <div className="photo-blurb">
-                <div className="photo-blurb-profile-pic-container">
-                  {/* <img
-                  src={buddyIcon}
-                  alt="profile"
-                  className="photo-blurb-profile-pic"
-                ></img> */}
-                </div>
-                <div className="photo-blurb-about-container">
-                  <div className="story-blurb-title">
-                    {story && story?.title}
-                  </div>
-                  {/* <div className="photo-blurb-photographer">{photo.User.username}</div> */}
-                  {firstName && lastName && (
-                    <div className="story-blurb-outer">
-                      <div className="story-blurb-author">
-                        {`Written by ${firstName} ${lastName}`}
-                        {/* {firstName} {lastName} */}
-                      </div>
-                      <div className="photo-stats">
-                        <div>
-                          Uploaded on{" "}
-                          {story.createdAt && convertDate(story.createdAt)}
-                        </div>
+            <div className="bottom-half-inner">
+              <div className="story-blurb">
+                <div className="story-blurb-title">{story && story?.title}</div>
+                {/* <div className="photo-blurb-photographer">{photo.User.username}</div> */}
+                {firstName && lastName && (
+                  <div className="story-blurb-outer">
+                    <div className="story-blurb-author">
+                      {`Written by ${firstName} ${lastName}`}
+                      {/* {firstName} {lastName} */}
+                    </div>
+                    <div className="photo-stats">
+                      <div>
+                        Uploaded on{" "}
+                        {story.createdAt && convertDate(story.createdAt)}
                       </div>
                     </div>
-                  )}
-
-                  <div className="story-blurb-content">
-                    {story && story?.content}
                   </div>
+                )}
+
+                <div className="story-blurb-content">
+                  {story && story?.content}
                 </div>
               </div>
 
@@ -179,6 +160,12 @@ function StoryDetailsPage() {
                       // onMouseLeave={() => setIsShown(false)}
                     >
                       <div className="comment-text-container">
+                        <div
+                          className="comment-text"
+                          className="comment-text-user"
+                        >
+                          {`${comment.User.firstName} ${comment.User.lastName} says`}
+                        </div>
                         <div className="comment-text">{comment.comment}</div>
                       </div>
                       <div className="comment-bottom-line-container">
@@ -205,20 +192,25 @@ function StoryDetailsPage() {
                     <div>You must be logged in to leave a comment.</div>
                   )}
                 </div>
-              </div>
 
-              <div className="add-comment-section">
-                {user ? <CommentCreateFormModal /> : <></>}
-              </div>
-            </div>
-
-            <div className="bottom-half-right">
-              <div className="stats-container">
-                <div className="comments-stats">
-                  <div className="comment-count">{comments?.length}</div>
-                  <div className="comment-label">comments</div>
+                {/* add divs here */}
+                <div className="add-comment-section">
+                  {user ? <CommentCreateFormModal /> : <></>}
                 </div>
               </div>
+
+              {/* <div className="add-comment-section">
+                {user ? <CommentCreateFormModal /> : <></>}
+              </div> */}
+
+              {/* <div className="bottom-half-right">
+                <div className="stats-container">
+                  <div className="comments-stats">
+                    <div className="comment-count">{comments?.length}</div>
+                    <div className="comment-label">comments</div>
+                  </div>
+                </div>
+              </div> */}
             </div>
           </div>
         </div>
