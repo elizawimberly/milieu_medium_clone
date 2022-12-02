@@ -8,7 +8,7 @@ function CommentDeleteModal({ comment }) {
 
   return (
     <div className="comment-delete-modal">
-      <button className="modal-button">
+      <button className="modal-button" id="edit-button">
         <div onClick={() => setShowModal(true)}>
           Delete this comment <i class="fa-solid fa-trash"></i>
         </div>

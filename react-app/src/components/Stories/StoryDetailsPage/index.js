@@ -163,8 +163,12 @@ function StoryDetailsPage() {
                       // onMouseLeave={() => setIsShown(false)}
                     >
                       <div className="comment-text-container">
-                        <div className="comment-text" id="comment-text-user">
-                          {`${comment.User.firstName} ${comment.User.lastName} says`}
+                        <div id="comment-text-user">
+                          <i
+                            id="comment-icon"
+                            class="fa-regular fa-comment fa-2x"
+                          ></i>
+                          {`     ${comment.User.firstName} ${comment.User.lastName} says:`}
                         </div>
                         <div className="comment-text">{comment.comment}</div>
                         <div className="comment-createdAt">
