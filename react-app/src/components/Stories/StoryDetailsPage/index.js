@@ -73,9 +73,9 @@ function StoryDetailsPage() {
             </NavLink>
           </button>
         </div>
-        <button className="modal-button" id="user-button">
+        <button className="modal-button" id="user-button" onClick={deleteStory}>
           <div className="details-update-container">
-            <div className="details-update-text" onClick={deleteStory}>
+            <div className="details-update-text">
               Delete Your Story
               <i
                 class="fa-solid fa-trash"
@@ -93,6 +93,7 @@ function StoryDetailsPage() {
   const history = useHistory();
 
   function deleteStory() {
+    console.log("clicked");
     let confirmAction = window.confirm("Are you sure to delete your story?");
     if (confirmAction) {
       alert("Your story has successfully been deleted");
