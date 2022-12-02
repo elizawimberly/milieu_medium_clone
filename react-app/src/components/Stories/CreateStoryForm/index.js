@@ -31,8 +31,8 @@ function StoryCreateForm() {
 
   useEffect(() => {
     let errors = [];
-    if (title.length < 3) {
-      errors.push("Title needs to be between 3 and 50 characters.");
+    if (title.length < 3 || title.length > 250) {
+      errors.push("Title needs to be between 3 and 250 characters.");
     }
 
     if (content.length < 5 || content.length > 10000) {

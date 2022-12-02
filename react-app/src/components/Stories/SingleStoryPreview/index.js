@@ -10,11 +10,16 @@ import defaultPhoto from "../../../assets/placeholder.jpeg";
 import "./SingleStoryPreview.css";
 
 const SingleStoryPreview = ({ story }) => {
+  const storySlice = story.content.slice(0, 500);
   return (
     <div className="story-preview-container">
       <NavLink className="" key={story.id} to={`/stories/${story.id}`}>
         <div>
-          <div>
+          <div className="preview-container">
+            <div className="preview-text-container">
+              <div className="preview-title">{story.title}</div>
+              <div className="preview-story-slice">{`"${storySlice}..."`}</div>
+            </div>
             <div>
               <img
                 className="story-preview-image"
@@ -27,9 +32,10 @@ const SingleStoryPreview = ({ story }) => {
                 onError={(e) => (e.currentTarget.src = defaultPhoto)}
               />
             </div>
-            <div className="">
+            {/* <div className="preview-text-container">
               <div>{story.title}</div>
-            </div>
+              <div>{`"${storySlice}..."`}</div>
+            </div> */}
           </div>
         </div>
       </NavLink>
