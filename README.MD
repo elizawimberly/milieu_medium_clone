@@ -44,7 +44,7 @@ If the user selects Get Started, they are directed to a sign up form where they 
 
 ---
 
-### Stories Feed
+## Stories Feed
 
 ---
 
