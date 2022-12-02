@@ -196,7 +196,9 @@ function StoryDetailsPage() {
                 <br />
                 <div>
                   {!user && (
-                    <div>You must be logged in to leave a comment.</div>
+                    <div className="no-session-message">
+                      You must be logged in to leave a comment.
+                    </div>
                   )}
                 </div>
 
