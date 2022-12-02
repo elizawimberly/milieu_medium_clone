@@ -197,3 +197,9 @@
 .comment-createdAt {
   margin-left: 20px;
 }
+
+.no-session-message {
+  /* background-color: red; */
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
